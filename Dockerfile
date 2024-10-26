@@ -5,13 +5,13 @@ FROM node:20.12.2-alpine3.18 AS base
 FROM base AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm install
 
 # Étape des dépendances de production uniquement
 FROM base AS production-deps
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci --omit=dev
+RUN npm install --omit=dev
 
 # Étape de build
 FROM base AS build
